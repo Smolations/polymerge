@@ -1,0 +1,84 @@
+
+## SOURCEME
+
+# determine the path to this script.
+POLYMERGE_PATH="${BASH_SOURCE[0]}"
+if [ -h "${POLYMERGE_PATH}" ]; then
+    # echo symbolic link
+    while [ -h "${POLYMERGE_PATH}" ]; do POLYMERGE_PATH=`readlink "${POLYMERGE_PATH}"`; done
+fi
+pushd . > /dev/null
+cd `dirname ${POLYMERGE_PATH}` > /dev/null
+export POLYMERGE_PATH=`pwd`
+popd > /dev/null
+
+
+if [ ! -d "$POLYMERGE_PATH" ]; then
+    echo "Failed to set \`polymerge\` path. It will not be loaded."
+    return 1
+fi
+
+## core variables.
+# these paths are where labs and polymers are managed
+export PM_HOME_PATH=~/.polymerge
+export PM_LAB_NOTEBOOKS_PATH="${PM_HOME_PATH}/lab_notebooks"
+export PM_LAB_REPOS_PATH="${PM_HOME_PATH}/lab_repos"
+export PM_LOG_PATH="${PM_HOME_PATH}/log"
+export PM_VAR_PATH="${PM_HOME_PATH}/var"
+
+# these are configuration variables
+export PM_UPDATE_BRANCH='open-source-updates'  # only useful for development
+export PM_LAB_REPO_FILE_NAME='laboratory.repo'
+export PM_POLYMERS_FOLDER_NAME='polymers'
+export PM_ACTIVE_LAB_FILE_NAME='active_lab'
+export PM_ACTIVE_POLYMER_FILE_SUFFIX='.active_polymer'
+export PM_NOTEBOOK_FETCH_DELAY=$(( 60 * 10 ))  # in seconds
+export PM_LOG_MAX_SIZE=1000   # in kb
+export PM_LOG_FILE_NAME='polymerge.log'
+export PM_DEFAULT_MASTHEAD=invita
+
+# derived
+export PM_ACTIVE_LAB_FILE_PATH="${PM_VAR_PATH}/${PM_ACTIVE_LAB_FILE_NAME}"
+export PM_LOG_FILE_PATH="${PM_LOG_PATH}/${PM_LOG_FILE_NAME}"
+export PM_MASTHEAD_PATH="${PM_VAR_PATH}/masthead"
+
+
+
+
+
+# ensure all submodules are initialized and updated
+fshSourceme="${POLYMERGE_PATH}/lib/functionsh/SOURCEME"
+if [ ! -f "${fshSourceme}" ]; then
+    cd "$POLYMERGE_PATH"
+    git submodule update --init &> /dev/null
+fi
+if [ ! -f "${fshSourceme}" ]; then
+    echo "${E} ERROR: ${X} could not initialize \`functionsh\` library."
+    return 2
+fi
+
+
+# source all functions (including libraries)
+source "$fshSourceme" > /dev/null
+if ! type -t __source_all &> /dev/null; then
+    echo "${E} ERROR: ${X} Unable to load dependency libraries."
+    return 4
+fi
+__source_all -x "${POLYMERGE_PATH}/functions"
+unset fshSourceme
+
+
+# set up variables to distinguish environment. thanks functionsh!
+__get_env
+
+
+# check for install in user home directory
+# if not there, install
+[ ! -d "$PM_HOME_PATH" ] && pm_install
+
+
+# user can now access polymerge via functions
+pm_get_active_lab
+pm_get_active_polymer
+
+# check for polymerge updates
