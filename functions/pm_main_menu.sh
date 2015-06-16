@@ -238,14 +238,15 @@ function pm_main_menu {
                 echo
                 echo
                 __short_ans "Enter new polymer branch name (or press Enter to abort):"
-                if [ -n "$_ans" ]; then
+                branch_name="$_ans"
+                if [ -n "$branch_name" ]; then
                     # validate branch name. thanks git!
                     # TODO: should the remote be checked for this branch name to warn the user?
-                    if [ ! -f "${polymersPath}/${_ans}" ] && [ "$_ans" != 'master' ] && pm_git --pm is-branch-valid "${_ans}"; then
-                        touch "${polymersPath}/${_ans}"
+                    if [ ! -f "${polymersPath}/${branch_name}" ] && [ "$branch_name" != 'master' ] && pm_git --pm is-branch-valid "${_ans}"; then
+                        touch "${polymersPath}/${branch_name}"
                         echo
-                        __yes_no --default=y "Make \`${_ans}\` the current active polymer"
-                        [ $_yes ] && pm_set_active_polymer "$_ans" || _no=
+                        __yes_no --default=y "Make \`${branch_name}\` the current active polymer"
+                        [ $_yes ] && pm_set_active_polymer "$branch_name" || _no=
 
                     else
                         echo

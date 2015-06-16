@@ -69,8 +69,8 @@ function pm_add_lab {
 
         # check for existence (and contents) of lab repo file
         elif [ ! -s "$labRepoFile" ]; then
-            pm_err "Laboratory repository file is missing or empty in notebook repository (${PM_LAB_REPO_FILE_NAME})."
-            rm -rf "$notebookRepoPath"
+            pm_err "Laboratory repository file ($labRepoFile) is missing or empty in notebook repository."
+            # rm -rf "$notebookRepoPath"
             retVal=4
         fi
     fi
@@ -84,7 +84,7 @@ function pm_add_lab {
         labRepoName=${labRepoName%.git}
         labRepoPath="${PM_LAB_REPOS_PATH}/${labRepoName}"
 
-        pm_debug "labRepoUrl = $labRepoUrl"
+        pm_debug "labRepoUrl  = $labRepoUrl"
         pm_debug "labRepoName = $labRepoName"
         pm_debug "labRepoPath = $labRepoPath"
 
@@ -99,9 +99,17 @@ function pm_add_lab {
             # create empty file for this project's active polymer
             touch "${PM_VAR_PATH}/${labRepoName}${PM_ACTIVE_POLYMER_FILE_SUFFIX}"
 
-            # create directory where polymers are located if it doesnt exist
+            # create directory where polymers are located if it doesnt exist (and commit)
             polyDir="${notebookRepoPath}/${PM_POLYMERS_FOLDER_NAME}"
-            [ ! -d "$polyDir" ] && mkdir "$polyDir"
+            if [ ! -d "$polyDir" ]; then
+                echo
+                echo " \`- Creating/Saving folder for polymers..."
+                mkdir "$polyDir"
+                touch "$polyDir/.gitkeep"
+                pm_git --nb="$notebookRepoName" add --all .
+                pm_git --nb="$notebookRepoName" commit -m "'(polymerge) Added polymers/ directory.'"
+                pm_git --nb="$notebookRepoName" push origin HEAD
+            fi
 
             echo
             echo "Laboratory added successfully!"

@@ -56,7 +56,7 @@ function pm_remove_monomer {
             if pm_mktemp; then
                 while read -u 3 branch; do
                     [ -z "$branch" ] && continue
-                    ! egrep -q "$monomer" <<< "$branch" && echo "$branch" >> "$_pm_temp_file"
+                    ! egrep -q "^${monomer}$" <<< "$branch" && echo "$branch" >> "$_pm_temp_file"
                 done 3< "$polyPath"
 
                 # pm_debug "  copy _pm_temp_file into build list"

@@ -35,7 +35,7 @@ function pm_get_active_lab {
 
     local alFile="${PM_ACTIVE_LAB_FILE_PATH}" aLab= nb=
 
-    [ -f "$alFile" ] && aLab=$( cat "$alFile" ) && nb=$( pm_get_notebook_from_lab "$aLab" )
+    [ -s "$alFile" ] && aLab=$( cat "$alFile" ) && nb=$( pm_get_notebook_from_lab "$aLab" )
 
     export _pm_active_lab="$aLab"
     export _pm_active_lab_styled="${STYLE_BRIGHT}${COL_YELLOW}${_pm_active_lab}${X}"
