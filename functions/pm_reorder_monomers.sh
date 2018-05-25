@@ -55,11 +55,11 @@ function pm_reorder_monomers {
 
     elif [ $( cat  "$polyPath" | wc -l | tr -d ' ' ) -lt 2 ]; then
         echo
-        pm_err "A polymer needs to contain two or more monomer branches to be re-ordered."
+        pm_err "A poly needs to contain two or more mono branches to be re-ordered."
         retVal=2
 
     else
-        if pm_choose_monomer --prompt="Select a monomer branch to move" || [ $? == 4 ]; then
+        if pm_choose_monomer --prompt="Select a mono branch to move" || [ $? == 4 ]; then
             # failure $retVal if user aborts menu. trying to keep this value
             # consistent through any code re-factoring, the return value is -1
             # so calling script can detect when user aborts.
@@ -90,7 +90,7 @@ function pm_reorder_monomers {
                 __in_array "$branch" "${monomers[@]}"
                 unset monomers[$_in_array_index]
                 monomers=( "${monomers[@]}" )
-                pm_debug "new monomers = ( ${orderedMonomers[@]} )"
+                pm_debug "new monos = ( ${orderedMonomers[@]} )"
 
                 # use array parameter expansion to build new, ordered array
                 [ $position != 0 ] && orderedMonomers+=( "${monomers[@]:0:$(( position - 1 ))}" )
@@ -107,8 +107,8 @@ function pm_reorder_monomers {
                 rm -f "${_pm_temp_file}"
 
                 pm_header
-                echo "New active polymer definition:"
-                echo "------------------------------"
+                echo "New active poly definition:"
+                echo "---------------------------"
                 pm_list_monomers
 
             else

@@ -87,7 +87,11 @@ function polymerge {
             ;;
 
             reinstall)
-                :
+                echo
+                __yes_no --default=n "Are you sure you want to re-install"
+                if [ $_yes ]; then
+                    rm -rf "${PM_HOME_PATH}" && source "${POLYMERGE_PATH}/SOURCEME"
+                fi
             ;;
 
             see-list)

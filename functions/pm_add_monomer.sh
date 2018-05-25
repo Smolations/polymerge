@@ -36,15 +36,15 @@ function pm_add_monomer {
     local retVal=0 polyPath=$( pm_get_polymer_path ) monomer="$@"
 
     if [ $# == 0 ]; then
-        pm_err "I'm sorry, what monomer branch are you trying to add?"
+        pm_err "I'm sorry, what mono branch are you trying to add?"
         retVal=1
 
     elif [ ! -f "$polyPath" ]; then
-        pm_err "Unable to locate polymer at: ${polyPath}"
+        pm_err "Unable to locate poly at: ${polyPath}"
         retVal=2
 
     elif grep -q "^$@$" "$polyPath"; then
-        pm_err "Cannot add monomer because it has already been added."
+        pm_err "Cannot add mono because it has already been added."
         retVal=4
 
     elif pm_mktemp; then
@@ -55,7 +55,7 @@ function pm_add_monomer {
         rm -f "$_pm_temp_file"
 
     else
-        pm_err "Unable to add monomer branch to polymer. Could not create temporary file."
+        pm_err "Unable to add mono branch to polymer. Could not create temporary file."
         retVal=8
     fi
 

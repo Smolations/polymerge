@@ -42,8 +42,8 @@ function pm_prune_polymers {
 
     pm_update_repo --lab="$_pm_active_lab"
     echo
-    echo "NOTE: If you end up removing the currently active polymer"
-    echo "you will need to choose a new active polymer."
+    echo "NOTE: If you end up removing the currently active poly"
+    echo "you will need to choose a new active poly."
     echo
 
     # if the list being refreshed happens to be the active list, prompt the
@@ -58,7 +58,7 @@ function pm_prune_polymers {
             # check if poly has been merged into master
             if pm_git -v --lab="$_pm_active_lab" branch -r --contains "origin/${poly}" | grep -q 'origin/master'; then
 
-                __yes_no --default=y "${BY}\`${poly}\`${Q} is in \`master\`. Remove this polymer from your notebook"
+                __yes_no --default=y "${BY}\`${poly}\`${Q} is in \`master\`. Remove this poly from your notebook"
                 if [ $_yes ]; then
                     if [ "$poly" == "$_pm_active_polymer" ]; then
                         pm_set_active_polymer '' || retVal=1

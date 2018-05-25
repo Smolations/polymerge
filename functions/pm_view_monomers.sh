@@ -21,9 +21,9 @@ function pm_view_monomers {
     pm_debug "pm_view_monomers( $@ )"
 
     local polyPath=$( pm_get_polymer_path )
-    pm_debug "  looking for polymer: ${polyPath}"
+    pm_debug "  looking for poly: ${polyPath}"
 
-    echo "Monomer branches in \`${_pm_active_polymer_styled}\`:"
+    echo "Mono branches in \`${_pm_active_polymer_styled}\`:"
     echo "---------------------------------------------"
     pm_list_monomers
     echo "---------------------------------------------"

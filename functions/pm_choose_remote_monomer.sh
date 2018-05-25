@@ -49,11 +49,11 @@ function pm_choose_remote_monomer {
     _pm_remote_monomer_choice=
 
     if [ $# == 0 ]; then
-        pm_err "Not sure which remote monomer you want me to find..."
+        pm_err "Not sure which remote mono you want me to find..."
         retVal=1
 
     elif [ ! -d "${labRepo}/.git" ]; then
-        pm_err "Could not locate remote monomers because laboratory repo can't be found:"
+        pm_err "Could not locate remote monos because laboratory repo can't be found:"
         pm_err "  ${labRepo}"
         retVal=2
 

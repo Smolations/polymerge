@@ -62,7 +62,7 @@ function pm_validate_lab_from_notebook {
             # [ ! -f "${labRepoFile}" ] && retVal=4
             # [ ! -d "${nbPath}/${PM_POLYMERS_FOLDER_NAME}" ] && pm_log "WARNING: no folder for polymers"
 
-            if ! pm_validate_notebook_repo "$nb"; then
+            if pm_validate_notebook_repo "$nb"; then
                 labRepo=$( cat "${labRepoFile}" )
                 labRepo="${labRepo##*/}"
                 labRepo="${labRepo%.git}"
@@ -73,7 +73,7 @@ function pm_validate_lab_from_notebook {
                 [ ! -d "${PM_LAB_REPOS_PATH}/${labRepo}/.git" ] && retVal=8
 
             else
-                pm_err "Cannot find lab repo for invalid notebook: ${nb}"
+                pm_err "Invalid notebook: ${nb}"
                 retVal=2
             fi
 

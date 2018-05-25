@@ -100,7 +100,7 @@ function pm_remerge_monomers {
     # delete build branch locally if it exists, then recreate it from master
     pm_debug "Delete build branch locally if it exists, then recreate it from ${baseBranch}..."
     if pm_git -v --lab="$_pm_active_lab" branch | grep -q "$polyName"; then
-        pm_debug "deleting polymer branch since it exists..."
+        pm_debug "deleting poly branch since it exists..."
         pm_git --lab="$_pm_active_lab" branch -D "$polyName"
     fi
 
@@ -108,7 +108,7 @@ function pm_remerge_monomers {
     # relationship to origin/$baseBranch, so we turn off tracking. We turn it on when pushing the branch up
     # a little further down the script
     if ! pm_git --lab="$_pm_active_lab" checkout --no-track -b "$polyName" "origin/${baseBranch}"; then
-        pm_err "Failed to switch to polymer branch [${polyName}] before merging. Aborting..."
+        pm_err "Failed to switch to poly branch [${polyName}] before merging. Aborting..."
         retVal=4
     fi
 
@@ -218,7 +218,7 @@ function pm_remerge_monomers {
         echo
 
         # prompt for pushing changes
-        __yes_no --default=y "${A}Commit${Q} and ${A}push${Q} new polymer branch to ${_pm_active_lab}"
+        __yes_no --default=y "${A}Commit${Q} and ${A}push${Q} new poly branch to ${_pm_active_lab}"
         echo
 
         if [ $_yes ]; then
@@ -242,10 +242,10 @@ function pm_remerge_monomers {
             pm_continue
 
         else
-            echo "No problem. Just be sure you push the newly-merged polymer branch"
+            echo "No problem. Just be sure you push the newly-merged poly branch"
             echo "to the remote BEFORE you push any notebook changes out to the team."
             echo "Branches on the remote should ALWAYS match their corresponding"
-            echo "polymer branch."
+            echo "poly branch."
         fi
     fi
 

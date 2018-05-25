@@ -65,20 +65,20 @@ function pm_main_menu {
     local curLab="\`${_pm_active_lab_styled}\`${STYLE_MENU_OPTION}"
     local curPoly="\`${_pm_active_polymer_styled}\`${STYLE_MENU_OPTION}"
 
-    local optMonomerView="${A}View${X}${STYLE_MENU_OPTION} monomer branches in ${curPoly}"
-    local optMonomerAdd="${A}Add${X}${STYLE_MENU_OPTION} a monomer branch to ${curPoly}"
-    local optMonomerRemove="${A}Remove${X}${STYLE_MENU_OPTION} a monomer branch from ${curPoly}"
-    local optMonomerReorder="${A}Re-Order${X}${STYLE_MENU_OPTION} monomer branches in ${curPoly}"
-    local optMonomerRemerge="${A}Re-Merge${X}${STYLE_MENU_OPTION} the monomer branches in ${curPoly}"
-    local optMonomerPrune="${A}Prune${X}${STYLE_MENU_OPTION} monomer branches in ${curPoly}"
+    local optMonomerView="${A}View${X}${STYLE_MENU_OPTION} mono branches in ${curPoly}"
+    local optMonomerAdd="${A}Add${X}${STYLE_MENU_OPTION} a mono branch to ${curPoly}"
+    local optMonomerRemove="${A}Remove${X}${STYLE_MENU_OPTION} a mono branch from ${curPoly}"
+    local optMonomerReorder="${A}Re-Order${X}${STYLE_MENU_OPTION} mono branches in ${curPoly}"
+    local optMonomerRemerge="${A}Re-Merge${X}${STYLE_MENU_OPTION} the mono branches in ${curPoly}"
+    local optMonomerPrune="${A}Prune${X}${STYLE_MENU_OPTION} mono branches in ${curPoly}"
 
-    local optPolymerChoose="${A}Choose${X}${STYLE_MENU_OPTION} a new active polymer branch"
-    local optPolymerCreate="${A}Create${X}${STYLE_MENU_OPTION} a new polymer branch in your notebook"
-    local optPolymerRemove="${A}Remove${X}${STYLE_MENU_OPTION} an existing polymer branch from your notebook"
+    local optPolymerChoose="${A}Choose${X}${STYLE_MENU_OPTION} a new active poly branch"
+    local optPolymerCreate="${A}Create${X}${STYLE_MENU_OPTION} a new poly branch in your notebook"
+    local optPolymerRemove="${A}Remove${X}${STYLE_MENU_OPTION} an existing poly branch from your notebook"
 
     local optNotebookPull="${A}Pull${X}${STYLE_MENU_OPTION} notebook changes down from team"
     local optNotebookPush="${A}Push${X}${STYLE_MENU_OPTION} notebook changes out to team"
-    local optNotebookAudit="${A}Prune${X}${STYLE_MENU_OPTION} notebook (remove integrated polymer branches)"
+    local optNotebookAudit="${A}Prune${X}${STYLE_MENU_OPTION} notebook (remove integrated poly branches)"
 
     local optLabSwitch="${A}Choose${X}${STYLE_MENU_OPTION} a new active laboratory"
     local optLabAdd="${A}Add${X}${STYLE_MENU_OPTION} a new laboratory"
@@ -129,9 +129,9 @@ function pm_main_menu {
                 echo "matching to find available branches to add, so you don't need to"
                 echo "enter the full branch name when choosing a branch to add."
                 echo
-                echo "Current monomers:"
-                echo "-----------------"
-                pm_list_monomers || echo "(Unable to retrieve current monomers)"
+                echo "Current mono branches:"
+                echo "----------------------"
+                pm_list_monomers || echo "(Unable to retrieve current monos)"
                 echo
                 echo
                 echo
@@ -184,7 +184,7 @@ function pm_main_menu {
                 [ $? == -1 ] && break
                 echo
                 echo
-                __yes_no --default=n "Would you like to re-order monomer branches again"
+                __yes_no --default=n "Would you like to re-order mono branches again"
             done
 
             if pm_polymers_changed "$_pm_active_notebook"; then
@@ -227,25 +227,26 @@ function pm_main_menu {
             until [ $_no ]; do
                 pm_header
 
-                echo "Polymer branches are meant to contain various monomer branches which will"
-                echo "be merged together sequentially. The name of a polymer branch must be unique,"
+                echo "Poly branches are meant to contain various mono branches which will"
+                echo "be merged together sequentially. The name of a poly branch must be unique,"
                 echo "adhere to git's branch-naming requirements, and must NOT be named \`master\`."
                 echo
-                echo "Current polymers:"
+                echo "Current poly branches:"
                 echo "-----------------"
-                pm_list_polymers || echo "(Unable to retrieve current polymers)"
+                pm_list_polymers || echo "(Unable to retrieve current polys)"
                 echo
                 echo
                 echo
-                __short_ans "Enter new polymer branch name (or press Enter to abort):"
-                if [ -n "$_ans" ]; then
+                __short_ans "Enter new poly branch name (or press Enter to abort):"
+                branch_name="$_ans"
+                if [ -n "$branch_name" ]; then
                     # validate branch name. thanks git!
                     # TODO: should the remote be checked for this branch name to warn the user?
-                    if [ ! -f "${polymersPath}/${_ans}" ] && [ "$_ans" != 'master' ] && pm_git --pm is-branch-valid "${_ans}"; then
-                        touch "${polymersPath}/${_ans}"
+                    if [ ! -f "${polymersPath}/${branch_name}" ] && [ "$branch_name" != 'master' ] && pm_git --pm is-branch-valid "${_ans}"; then
+                        touch "${polymersPath}/${branch_name}"
                         echo
-                        __yes_no --default=y "Make \`${_ans}\` the current active polymer"
-                        [ $_yes ] && pm_set_active_polymer "$_ans" || _no=
+                        __yes_no --default=y "Make \`${branch_name}\` the current active poly"
+                        [ $_yes ] && pm_set_active_polymer "$branch_name" || _no=
 
                     else
                         echo
@@ -268,8 +269,8 @@ function pm_main_menu {
             until [ $snarf ]; do
                 pm_header
                 echo "Alternatively, you could choose \"${optNotebookAudit}\""
-                echo "from the main menu. Choosing that option will remove any polymer branches already"
-                echo "merged into your active lab repository's mainline branch (usually \`master\`)."
+                echo "from the main menu. Choosing that option will remove any poly branches already"
+                echo "merged into your active lab repo's mainline branch (usually \`master\`)."
                 echo
                 pm_choose_polymer || break
                 if [ -n "$_pm_polymer_choice" ]; then
@@ -320,7 +321,7 @@ function pm_main_menu {
 
         # add a laboratory
         "$optLabAdd")
-            __short_ans "Enter the git clone URL for the notebook repository in your laboratory:"
+            __short_ans "Enter the git clone URL for the notebook repo in your laboratory:"
             echo
 
             if [ -z "$_ans" ]; then

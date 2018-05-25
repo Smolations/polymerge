@@ -48,15 +48,15 @@ function pm_choose_polymer {
 
     if [ $listPolymersExitCode != 0 ]; then
         retVal=1
-        pm_err "Unable to retrieve list of polymers. See log for details."
+        pm_err "Unable to retrieve list of polys. See log for details."
         pm_continue
 
     elif [ -z "$polymers" ]; then
         retVal=2
-        echo "There are no polymer definitions in the currently active notebook."
+        echo "There are no poly definitions in the currently active notebook."
         pm_continue
 
-    elif __menu --prompt="Choose a polymer branch" $polymers; then
+    elif __menu --prompt="Choose a poly branch" $polymers; then
         [ -n "$_menu_sel_value" ] && _pm_polymer_choice="$_menu_sel_value" || retVal=4
 
     else

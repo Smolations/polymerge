@@ -39,11 +39,11 @@ function pm_prune_monomers {
     local polyPath=$( pm_get_polymer_path )
 
     if [ ! -f "$polyPath" ]; then
-        pm_err "Cannot locate polymer:  ${polyPath}"
+        pm_err "Cannot locate poly:  ${polyPath}"
         retVal=1
 
     elif [ ! -s "$polyPath" ]; then
-        pm_err "Active polymer contains no monomer branches."
+        pm_err "Active poly contains no mono branches."
         retVal=2
 
     else
@@ -60,11 +60,11 @@ function pm_prune_monomers {
         if pm_mktemp; then
             # legend for output
             echo "  Output Legend:"
-            echo "  --------------------------------------------------------------------------------"
-            echo "    ${symKeep}  -  Branch not merged into master. It will remain on the build list."
-            echo "    ${symMrgd}  -  Branch has been merged into master. Remove from the polymer."
-            echo "    ${symDupe}  -  Branch on build list more than once. Remove the duplicate."
-            echo "  --------------------------------------------------------------------------------"
+            echo "  ---------------------------------------------------------------------------"
+            echo "    ${symKeep}  -  Branch not merged into master. It will remain in the poly."
+            echo "    ${symMrgd}  -  Branch has been merged into master. Remove from the poly."
+            echo "    ${symDupe}  -  Branch in poly more than once. Remove the duplicate."
+            echo "  ---------------------------------------------------------------------------"
             echo
 
             # loop through the monomer list, checking to see if each branch is contained
@@ -91,7 +91,7 @@ function pm_prune_monomers {
                     fi
 
                 else
-                    pm_debug "WARNING: empty branch in active polymer: ${branch}"
+                    pm_debug "WARNING: empty branch in active poly: ${branch}"
                 fi
             done 3< "$polyPath"
 

@@ -29,9 +29,9 @@ export PM_VAR_PATH="${PM_HOME_PATH}/var"
 # these are configuration variables
 export PM_UPDATE_BRANCH='open-source-updates'  # only useful for development
 export PM_LAB_REPO_FILE_NAME='laboratory.repo'
-export PM_POLYMERS_FOLDER_NAME='polymers'
+export PM_POLYMERS_FOLDER_NAME='polys'
 export PM_ACTIVE_LAB_FILE_NAME='active_lab'
-export PM_ACTIVE_POLYMER_FILE_SUFFIX='.active_polymer'
+export PM_ACTIVE_POLYMER_FILE_SUFFIX='.active_poly'
 export PM_NOTEBOOK_FETCH_DELAY=$(( 60 * 10 ))  # in seconds
 export PM_LOG_MAX_SIZE=1000   # in kb
 export PM_LOG_FILE_NAME='polymerge.log'
