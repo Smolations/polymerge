@@ -42,7 +42,7 @@ function pm_header {
     echo
     echo $headerTop
     printf '  %18s  %-52s \n' 'Active Laboratory:' "$activeLab"
-    printf '  %18s  %-52s \n' 'Active Polymer:' "${_pm_active_polymer_styled}"
+    printf '  %18s  %-52s \n' 'Active Poly:' "${_pm_active_polymer_styled}"
     echo $headerBottom
 
     if [ -n "${menu_choice}" ];then

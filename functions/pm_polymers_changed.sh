@@ -43,7 +43,7 @@ function pm_polymers_changed {
     local retVal=2 nb="$@"
 
     if ! pm_validate_notebook_repo "$nb"; then
-        pm_err "Cannot determine if notebook polymer definitions have changed."
+        pm_err "Cannot determine if notebook poly definitions have changed."
         pm_err "Invalid notebook specified: [${nb}]"
         retVal=1
 

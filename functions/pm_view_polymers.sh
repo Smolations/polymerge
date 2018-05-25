@@ -18,7 +18,7 @@
 function pm_view_polymers {
     pm_debug "pm_view_polymers( $@ )"
 
-    echo "Polymers in ${_pm_active_notebook}:"
+    echo "Polys in ${_pm_active_notebook}:"
     echo "-----------------------------------"
     pm_list_polymers
     echo "-----------------------------------"

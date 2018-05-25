@@ -46,7 +46,10 @@ function pm_reset_notebook {
         #         pm_git clean -f -- lists/"${file##*lists/}"
         #     }
         # done
-        if ! pm_git --nb="$nb" reset --hard HEAD; then
+
+        # need to inspect untracked files for polys and unset the active
+        # poly if it is getting cleaned
+        if ! pm_git --nb="$nb" reset --hard HEAD && ! pm_git --nb="$nb" clean -f; then
             retVal=4
         fi
     fi

@@ -38,13 +38,13 @@ function pm_remove_polymer {
         retVal=1
 
     elif [ ! -f "$polyPath" ]; then
-        pm_err "Unable to remove polymer because it cannot be found: ${polyPath}"
+        pm_err "Unable to remove poly because it cannot be found: ${polyPath}"
         retVal=2
 
     else
         if [ "$poly" == "$_pm_active_polymer" ]; then
-            echo "The polymer you selected is currently active. If you remove it, you"
-            echo "will have to choose a new active polymer."
+            echo "The poly you selected is currently active. If you remove it, you"
+            echo "will have to choose a new active poly."
             echo
         fi
 

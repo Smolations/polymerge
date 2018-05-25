@@ -48,7 +48,7 @@ function pm_push_notebook {
         if [ $_yes ]; then
             echo "Please wait..."
             pm_git --nb="$_pm_active_notebook" add -A "${PM_POLYMERS_FOLDER_NAME}/"
-            pm_git --nb="$_pm_active_notebook" commit -m "\"($( git config --get user.name ) via polymerge) updated polymer branch(es)\""
+            pm_git --nb="$_pm_active_notebook" commit -m "\"($( git config --get user.name ) via polymerge) updated poly branch(es)\""
             pm_git --nb="$_pm_active_notebook" push origin "$( pm_git -v --nb="$_pm_active_notebook" get-current-branch )"
             echo
             echo "Notebook changes ${A}pushed${X}!"

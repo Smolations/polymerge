@@ -38,15 +38,15 @@ function pm_remove_monomer {
     local polyPath=$( pm_get_polymer_path )
 
     if [ $# == 0 ]; then
-        pm_err "Pssst! Which monomer, bro? See log for details."
+        pm_err "Pssst! Which mono, bro? See log for details."
         retVal=1
 
     elif [ ! -f "$polyPath" ]; then
-        pm_err "Unable to locate active polymer at: ${polyPath}"
+        pm_err "Unable to locate active poly at: ${polyPath}"
         retVal=2
 
     elif ! grep -q "$monomer" "$polyPath"; then
-        pm_err "Cannot remove monomer because it is not in the polymer definition."
+        pm_err "Cannot remove mono because it is not in the poly definition."
         retVal=4
 
     else

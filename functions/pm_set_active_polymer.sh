@@ -54,8 +54,8 @@ function pm_set_active_polymer {
 
     elif [ ! -f "$polymerPath" ]; then
         retVal=2
-        pm_err -q "pm_set_active_polymer() - Cannot set active polymer to: ${poly}"
-        pm_err -q "pm_set_active_polymer() - The polymer does not exist!"
+        pm_err -q "pm_set_active_polymer() - Cannot set active poly to: ${poly}"
+        pm_err -q "pm_set_active_polymer() - The poly does not exist!"
         poly="$_pm_active_polymer"
 
     else

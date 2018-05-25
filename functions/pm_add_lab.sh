@@ -103,11 +103,11 @@ function pm_add_lab {
             polyDir="${notebookRepoPath}/${PM_POLYMERS_FOLDER_NAME}"
             if [ ! -d "$polyDir" ]; then
                 echo
-                echo " \`- Creating/Saving folder for polymers..."
+                echo " \`- Creating/Saving folder for polys..."
                 mkdir "$polyDir"
                 touch "$polyDir/.gitkeep"
                 pm_git --nb="$notebookRepoName" add --all .
-                pm_git --nb="$notebookRepoName" commit -m "'(polymerge) Added polymers/ directory.'"
+                pm_git --nb="$notebookRepoName" commit -m "'(polymerge) Added ${PM_POLYMERS_FOLDER_NAME}/ directory.'"
                 pm_git --nb="$notebookRepoName" push origin HEAD
             fi
 

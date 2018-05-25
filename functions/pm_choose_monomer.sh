@@ -59,16 +59,16 @@ function pm_choose_monomer {
     pm_debug "pm_list_monomers returned:  ${listMonomersExitCode}"
     pm_debug "available monomers:  ${monomers}"
 
-    __in_args prompt "$@" && menuPrompt+="${_arg_val}" || menuPrompt+="Choose a monomer branch"
+    __in_args prompt "$@" && menuPrompt+="${_arg_val}" || menuPrompt+="Choose a mono branch"
 
     # this first condition may need to spoof success to avoid infinite loops
     if [ $listMonomersExitCode != 0 ]; then
-        pm_err "Unable to retrieve list of monomers. See log for details."
+        pm_err "Unable to retrieve list of monos. See log for details."
         pm_continue
         retVal=1
 
     elif [ -z "$monomers" ]; then
-        echo "There are no monomer branches to choose from."
+        echo "There are no mono branches to choose from."
         pm_continue
         retVal=2
 

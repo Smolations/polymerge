@@ -7,15 +7,15 @@ Simply put, *polymerge* is a branch management tool. This idea was spawned while
 Glossary
 --------
 
-**_monomer (branch)_** - These are the building blocks of polymers in science. In polymerge, a **monomer** is simply a git branch within a **laboratory repository** (see below).
+**_mono (branch)_** - Monomers are the building blocks of polymers in science. In polymerge, a **mono** branch is simply a git branch within a **laboratory repository** (see below).
 
-**_polymer (branch)_** - This is a sequential combination of **monomers**. That is, **monomer branches** are merged together to form a **polymer branch**. These branches also live inside a **laboratory repository**.
+**_poly (branch)_** - This is a sequential combination of **monos**. That is, **mono branches** are merged together to form a **poly** branch. These branches also live inside a **laboratory repository**.
 
-**_polymer definition (file)_** - This is a file managed by polymerge, living in the user's **laboratory notebook repository**. It defines a list of monomer branches which make up a polymer branch (in sequential order). Essentially, a **polymer definition file** is simply the on-disk representation of a **polymer branch**.
+**_poly definition (file)_** - This is a file managed by polymerge, living in the user's **laboratory notebook repository**. It defines a list of **mono branches** which make up a poly branch (in sequential order). Essentially, a **poly definition file** is simply the on-disk representation of a **poly branch**.
 
-**_laboratory notebook (repository)_** - Sometimes referred to as a "lab notebook" or "notebook repo," this is a repository the user sets up to contain the **polymer definitions** which polymerge uses to manage git branches. This repo also contains a file to tell polymerge the location of its corresponding **laboratory repository**. The only content of that file is the **laboratory repository's** clone URL.
+**_laboratory notebook (repository)_** - Often referred to as a "lab notebook" or "notebook repo," this is a repository the user sets up to contain the **poly definitions** from which polymerge uses to manage git branches. This repo also contains a file to tell polymerge the location of its corresponding **laboratory repository**. The only content of that file is the **laboratory repository's** clone URL.
 
-**_laboratory (repository)_** - Sometimes referred to as a "lab repo," this is the codebase for your team's application. The branches contained in that project are all of the **monomer branches** you will use to create **polymer branches**.
+**_laboratory (repository)_** - Often referred to as a "lab repo," this is the codebase for your team's application. The branches contained in that project are all of the **mono branches** you will use to create **poly branches**.
 
 **_laboratory_** - Sometimes referred to as a "lab," a **laboratory** is the combination of a **laboratory notebook repository** and a **laboratory repository**. The name of a laboratory shares the name of its **laboratory repository**. This makes it easier for the user to identify the current repository being managed by polymerge.
 
@@ -24,9 +24,9 @@ Glossary
 How It Works
 ------------
 
-A polymer has a 1-to-1 relationship with a git branch in a laboratory repo. If you name a polymer as "qa", polymerge will be managing the `qa` branch in the laboratory repo. The user can then add/remove/re-order individual branches to/in these polymers via the polymerge interface. polymerge then deletes the `qa` branch from the laboratory repo remote, re-creates that branch off of the `master` branch, and then sequentially merges in each monomer branch specified in the polymer. If one of those merges presents a conflict, the merge is backed out and the user is notified. polymerge also does a sort of "blame" on the conflict so the developer knows which branch is the culprit. If the very first merge fails, it is likely that the offending monomer branch (which would be the first defined in the polymer) is not up-to-date with `master`, and requires merging or rebasing.
+A poly branch has a 1-to-1 relationship with a git branch in a laboratory repo. If you name a poly branch as "qa", polymerge will be managing the `qa` branch in the laboratory repo. The user can then add/remove/re-order individual mono branches to/in these poly branches via the polymerge interface. polymerge then deletes the `qa` branch from the laboratory repo remote, re-creates that branch off of the `master` branch, and then sequentially merges in each mono branch specified in the poly. If one of those merges presents a conflict, the merge is backed out and the user is notified. polymerge also does a sort of "blame" on the conflict so the developer knows which branch is the culprit. If the very first merge fails, it is likely that the offending mono branch (which would be the first defined in the poly) is not up-to-date with `master`, and requires merging or rebasing.
 
-Every laboratory encompasses exactly one lab repo and one notebook repo. Users may have multiple laboratories to manage multiple projects. These labs are mutually exclusive and do not interact with one another. It is the user's responsibility to choose the active laboratory for which operations are completed by polymerge. Luckily, the active laboratory and any active polymers are persisted, so users can pick up where they left off, even after a computer restart!
+Every laboratory encompasses exactly one lab repo and one notebook repo. Users may have multiple laboratories to manage multiple projects. These labs are mutually exclusive and do not interact with one another. It is the user's responsibility to choose the active laboratory for which operations are completed by polymerge. Luckily, the active laboratory and any active polys are persisted, so users can pick up where they left off, even after a computer restart!
 
 
 Requirements
@@ -40,15 +40,15 @@ This project was developed on OS X, but _should_ be *nix compatible. I have yet 
 
 ### Notebook Repository Structure
 
-In order for the polymerge project to remain open-source and for teams to manage polymer branches in tandem, a standalone notebook repository is required. This repository should be created in such a way that all team members have read/write access and should have the following structure:
+In order for the polymerge project to remain open-source and for teams to manage poly branches in tandem, a standalone notebook repo is required. This repository should be created in such a way that all team members have read/write access and should have the following structure:
 
     notebook-repo/
-        - polymers/
+        - polys/
         - laboratory.repo
 
 The contents of the `laboratory.repo` file should simply be a git clone URL pointing to the repository where polymer branches are to be managed. *polymerge* will then handle cloning and managing both repositories.
 
-**NOTE:** The `polymers/` directory is _somewhat_ optional as it will be created when polymerge is integrated into your shell.
+**NOTE:** The `polys/` directory is _somewhat_ optional as it will be created when polymerge is integrated into your shell.
 
 
 Installation
@@ -80,7 +80,7 @@ Because polymerge is simply a collection of functions, the project can be update
 
 ### Create a Notebook Repository
 
-The first thing you will need to do is create a notebook repository (if a team member has not done so already) following the structure given in the *Requirements* section above. Make sure the `laboratory.repo` file contains the correct URL for the laboratory repository that polymerge will manage with your polymer definitions.
+The first thing you will need to do is create a notebook repo (if a team member has not done so already) following the structure given in the *Requirements* section above. Make sure the `laboratory.repo` file contains the correct URL for the laboratory repository that polymerge will manage with your poly definitions.
 
 
 ### Add a Laboratory
@@ -99,7 +99,7 @@ You will be presented with an initial menu:
 
     ________________________________________________________________________
       Active Laboratory:
-         Active Polymer:
+            Active Poly:
     ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 
 
@@ -112,7 +112,7 @@ You will be presented with an initial menu:
 
       Please make a selection (or press Enter to abort):
 
-While working with polymerge, the active laboratory, active notebook, and active polymer are always displayed for reference just under the masthead. Users may only manage one laboratory at a time, and almost all functions in polymerge utilize these active values when performing their operations. This also means that your polymerge menu is contextual, changing based on the configuration and state of each individual laboratory.
+While working with polymerge, the active laboratory, active notebook, and active poly are always displayed for reference just under the masthead. Users may only manage one laboratory at a time, and almost all functions in polymerge utilize these active values when performing their operations. This also means that your polymerge menu is contextual, changing based on the configuration and state of each individual laboratory.
 
 Choosing **See information about polymerge and its current state** will display the values of all global variables polymerge uses, as well as information about any laboratories currently added to polymerge. Choosing **Change masthead** will allow you to change the polymerge masthead at the top of the polymerge interface.
 
@@ -121,7 +121,7 @@ Choose the option to add a new laboratory. You will then be prompted for your **
 
 ### Set an Active Laboratory
 
-Once the laboratory has been added, you will need to set it as the active laboratory so that polymerge knows where to manage the various polymer branches. Once a laboratory has been added to polymerge, more menu options are "unlocked":
+Once the laboratory has been added, you will need to set it as the active laboratory so that polymerge knows where to manage the various poly branches. Once a laboratory has been added to polymerge, more menu options are "unlocked":
 
                    /)
           __   ___//     ___    _  __  _    _
@@ -131,7 +131,7 @@ Once the laboratory has been added, you will need to set it as the active labora
 
     ________________________________________________________________________
       Active Laboratory:
-         Active Polymer:
+            Active Poly:
     ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 
 
@@ -149,7 +149,7 @@ Once the laboratory has been added, you will need to set it as the active labora
 Select the option to choose a new active laboratory. You can then select the lab you just added and it will become active.
 
 
-### Create a New Polymer Branch
+### Create a New Poly Branch
 
 Now that you have chosen an active laboratory, an additional menu option is displayed (note that I have created a dummy notebook repository which specifies another of my projects, [git-hug](https://github.com/Smolations/git-hug) as the laboratory repo):
 
@@ -161,13 +161,13 @@ Now that you have chosen an active laboratory, an additional menu option is disp
 
     ________________________________________________________________________
       Active Laboratory:  git-hug  (notebook: polymerge_notebook1)
-         Active Polymer:
+            Active Poly:
     ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 
 
       Please make a selection (or press Enter to abort):
 
-        1:  Create a new polymer branch in your notebook
+        1:  Create a new poly branch in your notebook
         2:  Choose a new active laboratory
         3:  Add a new laboratory
         4:  Remove an existing laboratory
@@ -177,12 +177,12 @@ Now that you have chosen an active laboratory, an additional menu option is disp
 
       Please make a selection (or press Enter to abort):
 
-You can now choose to create a new polymer branch. You will be prompted for a name to give to this wrapper branch. Once submitted and validated, your new polymer branch will be created. You will also be prompted to set the new polymer as the active polymer. If you decline, you will need to make sure an active polymer is set before you can add any monomers to it.
+You can now choose to create a new poly branch. You will be prompted for a name to give to this wrapper branch. Once submitted and validated, your new poly branch will be created. You will also be prompted to set the new poly as the active poly. If you decline, you will need to make sure an active poly is set before you can add any mono branches to it.
 
 
-### Add a Monomer to a Polymer
+### Add a Mono to a Poly
 
-Now that there is at least one polymer defined and an active polymer is set, another group of menu options appears:
+Now that there is at least one poly defined and an active poly is set, another group of menu options appears:
 
                    /)
           __   ___//     ___    _  __  _    _
@@ -192,18 +192,18 @@ Now that there is at least one polymer defined and an active polymer is set, ano
 
     ________________________________________________________________________
       Active Laboratory:  git-hug  (notebook: polymerge_notebook1)
-         Active Polymer:  my-very-first-polymer
+            Active Poly:  my-very-first-poly
     ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 
 
       Please make a selection (or press Enter to abort):
 
-        1:  View monomer branches in `my-very-first-polymer` (0)
-        2:  Add a monomer branch to `my-very-first-polymer`
-        3:  Create a new polymer branch in your notebook
-        4:  Remove an existing polymer branch from your notebook
+        1:  View mono branches in `my-very-first-poly` (0)
+        2:  Add a mono branch to `my-very-first-poly`
+        3:  Create a new poly branch in your notebook
+        4:  Remove an existing poly branch from your notebook
         5:  Push notebook changes out to team
-        6:  Prune notebook (remove integrated polymer branches)
+        6:  Prune notebook (remove integrated poly branches)
         7:  Choose a new active laboratory
         8:  Add a new laboratory
         9:  Remove an existing laboratory
@@ -213,15 +213,15 @@ Now that there is at least one polymer defined and an active polymer is set, ano
 
       Please make a selection (or press Enter to abort):
 
-As you can see, you now have a quick overview of the number of monomers in your active polymer. Once you have more than one polymer defined, you will get a similar overview for total number of polymers in your active notebook.
+As you can see, you now have a quick overview of the number of monos in your active poly. Once you have more than one poly defined, you will get a similar overview for total number of polys in your active notebook.
 
 Since this document is emulating starting a laboratory from scratch, I should explain a couple of the newly available options.
 
-* **Prune notebook (remove integrated polymer branches)** - This option appears when you have one or more polymers defined. Choosing this options sets polymerge into action, searching for any of your defined polymer branches which have already been merged into `master`. If found, you are prompted to remove them, one at a time.
+* **Prune notebook (remove integrated poly branches)** - This option appears when you have one or more poly branches defined. Choosing this options sets polymerge into action, searching for any of your defined poly branches which have already been merged into `master`. If found, you are prompted to remove them, one at a time.
 
-* **Push notebook changes out to team** - This option appears any time that changes are made in the active notebook. In this case, we just added a new polymer, but it is an empty definition. Therefore, the polymer definition file would show up as "untracked" in the notebook repo managed by polymerge. Usually, you are prompted to re-merge a polymer once you've added/removed/re-ordered its monomers. After all, why prompt the user to submit notebook changes automatically at this point if the polymer is just an empty file?
+* **Push notebook changes out to team** - This option appears any time that changes are made in the active notebook. In this case, we just added a new poly, but it is an empty definition. Therefore, the poly definition file would show up as "untracked" in the notebook repo managed by polymerge. Usually, you are prompted to re-merge a poly once you've added/removed/re-ordered its monos. After all, why prompt the user to submit notebook changes automatically at this point if the poly is just an empty file?
 
-Choosing the option to add a monomer branch will display a prompt for you to enter any part of the branch name you'd like to add. polymerge uses case-insensitive pattern matching to find candidates on the remote, allowing you to choose from that list. The branch is then added to the polymer definition, and you are given the opportunity to continue adding monomer branches. Once you are finished, you will be prompted to (re-)merge the polymer and push those changes out to the team. polymerge first performs the required branch operations within the laboratory repository, then performs operations in the notebook repository so that your team can share the new definition.
+Choosing the option to add a mono branch will display a prompt for you to enter any part of the branch name you'd like to add. polymerge uses case-insensitive pattern matching to find candidates on the remote, allowing you to choose from that list. The branch is then added to the poly definition, and you are given the opportunity to continue adding mono branches. Once you are finished, you will be prompted to (re-)merge the poly and push those changes out to the team. polymerge first performs the required branch operations within the laboratory repository, then performs operations in the notebook repository so that your team can share the new definition.
 
                    /)
           __   ___//     ___    _  __  _    _
@@ -231,18 +231,18 @@ Choosing the option to add a monomer branch will display a prompt for you to ent
 
     ________________________________________________________________________
       Active Laboratory:  git-hug  (notebook: polymerge_notebook1)
-         Active Polymer:  my-very-first-polymer
+            Active Poly:  my-very-first-poly
     ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 
-    Add a monomer branch to `my-very-first-polymer`:
+    Add a mono branch to `my-very-first-poly`:
 
     The laboratory repository has been fetched, so you can choose from
     all available branches on the remote. `polymerge` uses pattern
     matching to find available branches to add, so you don't need to
     enter the full branch name when choosing a branch to add.
 
-    Current monomers:
-    -----------------
+    Current mono branches:
+    ----------------------
     branch3
     branch2
     branch1
@@ -251,9 +251,9 @@ Choosing the option to add a monomer branch will display a prompt for you to ent
 
       Enter ANY part of a branch name to add (or press Enter to abort):
 
-      Re-merge `my-very-first-polymer` and test for merge conflicts [Y/n]?
+      Re-merge `my-very-first-poly` and test for merge conflicts [Y/n]?
 
-There is one crucial part of polymerge that needs to be addressed here. In this example, I added the branches in lexigraphical order (`branch1` followed by `branch2` followed by `branch3`). However, they are in reverse order in the polymer definition file. The reason for this is that polymerge adds a monomer to the _top_ of the polymer definition file each time the user adds one. When a new monomer is added to a cleanly merged polymer, it MUST be added to the top in order for polymerge to determine which existing monomers are conflicting with the monomer which was just added during a polymer merge operation. You should *always* re-merge after modifying a polymer in order to weed out merge conflicts as soon as possible.
+There is one crucial part of polymerge that needs to be addressed here. In this example, I added the branches in lexigraphical order (`branch1` followed by `branch2` followed by `branch3`). However, they are in reverse order in the polymer definition file. The reason for this is that polymerge adds a mono to the _top_ of the poly definition file each time the user specifies one. When a new mono is added to a cleanly merged poly, it MUST be added to the top in order for polymerge to determine which existing monomers are conflicting with the monomer which was just added during a polymer merge operation. You should *always* re-merge after modifying a polymer in order to weed out merge conflicts as soon as possible.
 
                    /)
           __   ___//     ___    _  __  _    _
@@ -263,10 +263,10 @@ There is one crucial part of polymerge that needs to be addressed here. In this 
 
     ________________________________________________________________________
       Active Laboratory:  git-hug  (notebook: polymerge_notebook1)
-         Active Polymer:  my-very-first-polymer
+            Active Poly:  my-very-first-poly
     ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 
-    Add a monomer branch to `my-very-first-polymer`:
+    Add a mono branch to `my-very-first-poly`:
 
 
     Attempting to merge (3) branches:
@@ -279,13 +279,13 @@ There is one crucial part of polymerge that needs to be addressed here. In this 
 
     Sweet! No merge conflicts!
 
-      Commit and push new polymer branch to git-hug [Y/n]?
+      Commit and push new poly branch to git-hug [Y/n]?
 
-    Pushing `my-very-first-polymer` to git-hug...done.
+    Pushing `my-very-first-poly` to git-hug...done.
 
-    Successfully pushed `my-very-first-polymer`!
+    Successfully pushed `my-very-first-poly`!
 
-After committing the updated polymer branch to your lab repo, you are then prompted to push the notebook repo changes out to the remote. This makes other team members aware of changes very quickly:
+After committing the updated poly branch to your lab repo, you are then prompted to push the notebook repo changes out to the remote. This makes other team members aware of changes very quickly:
 
                    /)
           __   ___//     ___    _  __  _    _
@@ -295,23 +295,23 @@ After committing the updated polymer branch to your lab repo, you are then promp
 
     ________________________________________________________________________
       Active Laboratory:  git-hug  (notebook: polymerge_notebook1)
-         Active Polymer:  my-very-first-polymer
+            Active Poly:  my-very-first-poly
     ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 
-    Add a monomer branch to `my-very-first-polymer`:
+    Add a mono branch to `my-very-first-poly`:
 
-    Monomer branches in `my-very-first-polymer`:
-    ---------------------------------------------
+    Mono branches in `my-very-first-poly`:
+    -----------------------------------------
     branch3
     branch2
     branch1
-    ---------------------------------------------
+    -----------------------------------------
 
 
     Preparing to push notebook changes out to team:
 
-    $ git status --porcelain -- "polymers/"
-    ?? polymers/my-very-first-polymer
+    $ git status --porcelain -- "polys/"
+    ?? polys/my-very-first-poly
 
 
       Commit notebook changes listed above [Y/n]?
@@ -319,7 +319,7 @@ After committing the updated polymer branch to your lab repo, you are then promp
 
 ### All Your Menu Are Belong to Us
 
-The last group of menu options is displayed once you have an active polymer definition which contains one or more monomers:
+The last group of menu options is displayed once you have an active poly definition which contains one or more monos:
 
                    /)
           __   ___//     ___    _  __  _    _
@@ -329,21 +329,21 @@ The last group of menu options is displayed once you have an active polymer defi
 
     ________________________________________________________________________
       Active Laboratory:  git-hug  (notebook: polymerge_notebook1)
-         Active Polymer:  my-very-first-polymer
+            Active Poly:  my-very-first-poly
     ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 
 
       Please make a selection (or press Enter to abort):
 
-        1:  View monomer branches in `my-very-first-polymer` (3)
-        2:  Add a monomer branch to `my-very-first-polymer`
-        3:  Remove a monomer branch from `my-very-first-polymer`
-        4:  Re-Order monomer branches in `my-very-first-polymer`
-        5:  Re-Merge the monomer branches in `my-very-first-polymer`
-        6:  Prune monomer branches in `my-very-first-polymer`
-        7:  Create a new polymer branch in your notebook
-        8:  Remove an existing polymer branch from your notebook
-        9:  Prune notebook (remove integrated polymer branches)
+        1:  View mono branches in `my-very-first-poly` (3)
+        2:  Add a mono branch to `my-very-first-poly`
+        3:  Remove a mono branch from `my-very-first-poly`
+        4:  Re-Order mono branches in `my-very-first-poly`
+        5:  Re-Merge the mono branches in `my-very-first-poly`
+        6:  Prune mono branches in `my-very-first-poly`
+        7:  Create a new poly branch in your notebook
+        8:  Remove an existing poly branch from your notebook
+        9:  Prune notebook (remove integrated poly branches)
        10:  Choose a new active laboratory
        11:  Add a new laboratory
        12:  Remove an existing laboratory
@@ -355,9 +355,9 @@ The last group of menu options is displayed once you have an active polymer defi
 
 A few short explanations for some of the new options:
 
-* **Re-Order monomer branches in \`...\`** - This is useful when attempting to troubleshoot merge conflicts. The most common operation is to move a monomer to the top of the polymer definition, re-merge, and observe which branches create conflicts.
-* **Re-Merge the monomer branches in \`...\`** - This is a standalone merging operation for the active polymer. The same thing happens whenever you modify a polymer definition. This is most useful when an update to a monomer branch is pushed by a developer and the changes need to be brought in to the polymer wrapper branch.
-* **Prune monomer branches in \`...\`** - Similar to the polymer pruning operation, this option will tell polymerge to determine if any monomers in the active polymer have been merged into `master`. If they have, they are removed, and you are prompted to re-merge the pruned polymer branch.
+* **Re-Order mono branches in \`...\`** - This is useful when attempting to troubleshoot merge conflicts. The most common operation is to move a mono to the top of the poly definition, re-merge, and observe which branches create conflicts.
+* **Re-Merge the mono branches in \`...\`** - This is a standalone merging operation for the active poly. The same thing happens whenever you modify a poly definition. This is most useful when an update to a mono branch is pushed by a developer and the changes need to be brought in to the poly wrapper branch.
+* **Prune mono branches in \`...\`** - Similar to the poly pruning operation, this option will tell polymerge to determine if any monos in the active poly have been merged into `master`. If they have, they are removed, and you are prompted to re-merge the pruned poly branch.
 
 
 ### Notebook Reset
@@ -369,7 +369,7 @@ Miscellany
 ----------
 * To turn on debug logging, you will need to set a global variable: `export PM_DEBUG=true`
 * Sometimes there are delays when switching to certain menu options or performing various operations. This is due to the fact that polymerge often performs git operations in the background for various purposes.
-* The following is an example of what you would see for a merge conflict while merging a polymer branch (in OS X, the pass/fail indicators are pretty little glyphs). Note that `conflicting-branch2` would be the most recent monomer branch added to the polymer, so this output indicates that `conflicting-branch1` may have merged well with `branch1` and `branch2`, but it does not play nicely with the newly added monomer branch:
+* The following is an example of what you would see for a merge conflict while merging a poly branch (in OS X, the pass/fail indicators are pretty little glyphs). Note that `conflicting-branch2` would be the most recent mono branch added to the poly, so this output indicates that `conflicting-branch1` may have merged well with `branch1` and `branch2`, but it does not play nicely with the newly added mono branch:
 
                        /)
               __   ___//     ___    _  __  _    _
@@ -379,10 +379,10 @@ Miscellany
 
         ________________________________________________________________________
           Active Laboratory:  git-hug  (notebook: polymerge_notebook1)
-             Active Polymer:  i-have-conflicts
+                Active Poly:  i-have-conflicts
         ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
 
-        Add a monomer branch to `i-have-conflicts`:
+        Add a mono branch to `i-have-conflicts`:
 
 
         Attempting to merge (4) branches:

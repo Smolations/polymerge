@@ -58,10 +58,10 @@ function pm_remerge_polymer_and_push_change {
     # we only need this warning if changes were actually made!
     else
         echo
-        echo "${W}  WARNING!                                                             ${X}"
-        echo "${W}    You need to re-merge the branches in this polymer branch prior to  ${X}"
-        echo "${W}    pushing the changes you have made in order to ensure there are no  ${X}"
-        echo "${W}    merge conflicts between the monomer branches contained therein.    ${X}"
+        echo "${W}  WARNING!                                                            ${X}"
+        echo "${W}    You need to re-merge the branches in this poly branch prior to    ${X}"
+        echo "${W}    pushing the changes you have made in order to ensure there are no ${X}"
+        echo "${W}    merge conflicts between the mono branches contained therein.      ${X}"
         echo
     fi
 }
